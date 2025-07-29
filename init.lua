@@ -121,8 +121,17 @@ hs.hotkey.bind({"cmd", "ctrl"}, ".", function()
     if not win then return end
     saveFrame(win)
 
-    if win:isFullScreen() or getWindowState(win) == "stageManager" then
-        -- If fullscreen or in stage manager, resize to 75%
+    local currentState = getWindowState(win)
+    local statesToResize = {
+        ["stageManager"] = true,
+        ["leftHalf"] = true,
+        ["rightHalf"] = true,
+        ["stageManagerTop"] = true,
+        ["stageManagerBottom"] = true
+    }
+
+    if win:isFullScreen() or statesToResize[currentState] then
+        -- If fullscreen or in a predefined state, resize to 75%
         applyFrame(win, "center")
     else
         -- Otherwise, just center the window without resizing
