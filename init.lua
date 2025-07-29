@@ -120,7 +120,23 @@ hs.hotkey.bind({"cmd", "ctrl"}, ".", function()
     local win = hs.window.focusedWindow()
     if not win then return end
     saveFrame(win)
-    applyFrame(win, "center")
+
+    if win:isFullScreen() or getWindowState(win) == "stageManager" then
+        -- If fullscreen or in stage manager, resize to 75%
+        applyFrame(win, "center")
+    else
+        -- Otherwise, just center the window without resizing
+        local frame = win:frame()
+        local screenFrame = win:screen():frame()
+        local newFrame = {
+            x = screenFrame.x + (screenFrame.w - frame.w) / 2,
+            y = screenFrame.y + (screenFrame.h - frame.h) / 2,
+            w = frame.w,
+            h = frame.h
+        }
+        win:setFrame(newFrame)
+        windowState[win:id()] = nil -- Not in a predefined state
+    end
 end)
 
 hs.hotkey.bind({"cmd", "ctrl"}, "Left", handleKey("Left"))
