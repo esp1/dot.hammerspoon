@@ -24,12 +24,14 @@ local frames = {
     upperLeft = function(sf) return {x = sf.x, y = sf.y, w = sf.w / 2, h = sf.h / 2} end,
     upperRight = function(sf) return {x = sf.x + sf.w / 2, y = sf.y, w = sf.w / 2, h = sf.h / 2} end,
     lowerLeft = function(sf) return {x = sf.x, y = sf.y + sf.h / 2, w = sf.w / 2, h = sf.h / 2} end,
-    lowerRight = function(sf) return {x = sf.x + sf.w / 2, y = sf.y + sf.h / 2, w = sf.w / 2, h = sf.h / 2} end
+    lowerRight = function(sf) return {x = sf.x + sf.w / 2, y = sf.y + sf.h / 2, w = sf.w / 2, h = sf.h / 2} end,
+    center = function(sf) return {x = sf.x + sf.w * 0.125, y = sf.y + sf.h * 0.125, w = sf.w * 0.75, h = sf.h * 0.75} end
 }
 
 -- State transitions
 local transitions = {
     stageManager = {Left = "leftHalf", Right = "rightHalf", Up = "stageManagerTop", Down = "stageManagerBottom"},
+    center = {Left = "leftHalf", Right = "rightHalf", Up = "stageManagerTop", Down = "stageManagerBottom"},
     stageManagerTop = {Left = "upperLeft", Right = "upperRight", Down = "stageManagerBottom"},
     stageManagerBottom = {Left = "lowerLeft", Right = "lowerRight", Up = "stageManagerTop"},
     leftHalf = {Right = "rightHalf", Up = "upperLeft", Down = "lowerLeft"},
@@ -112,6 +114,13 @@ hs.hotkey.bind({"cmd", "ctrl"}, "return", function()
     if not win then return end
     saveFrame(win)
     applyFrame(win, "stageManager")
+end)
+
+hs.hotkey.bind({"cmd", "ctrl"}, ".", function()
+    local win = hs.window.focusedWindow()
+    if not win then return end
+    saveFrame(win)
+    applyFrame(win, "center")
 end)
 
 hs.hotkey.bind({"cmd", "ctrl"}, "Left", handleKey("Left"))
