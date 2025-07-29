@@ -107,20 +107,20 @@ function handleKey(direction)
 end
 
 -- Hotkey bindings
-hs.hotkey.bind({"cmd", "shift"}, "f", function()
+hs.hotkey.bind({"cmd", "ctrl"}, "return", function()
     local win = hs.window.focusedWindow()
     if not win then return end
     saveFrame(win)
     applyFrame(win, "stageManager")
 end)
 
-hs.hotkey.bind({"cmd", "shift"}, "Left", handleKey("Left"))
-hs.hotkey.bind({"cmd", "shift"}, "Right", handleKey("Right"))
-hs.hotkey.bind({"cmd", "shift"}, "Up", handleKey("Up"))
-hs.hotkey.bind({"cmd", "shift"}, "Down", handleKey("Down"))
+hs.hotkey.bind({"cmd", "ctrl"}, "Left", handleKey("Left"))
+hs.hotkey.bind({"cmd", "ctrl"}, "Right", handleKey("Right"))
+hs.hotkey.bind({"cmd", "ctrl"}, "Up", handleKey("Up"))
+hs.hotkey.bind({"cmd", "ctrl"}, "Down", handleKey("Down"))
 
 -- Restore window to previous dimensions
-hs.hotkey.bind({"cmd", "shift"}, "delete", function()
+hs.hotkey.bind({"cmd", "ctrl"}, "delete", function()
     local win = hs.window.focusedWindow()
     if not win then return end
 
